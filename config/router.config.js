@@ -101,7 +101,7 @@ export default [
       // 时间轴管理
       {
         path: '/timelinemanage',
-        icon: 'info',
+        icon: 'hourglass',
         name: 'timelinemanage',
         routes: [
           {
