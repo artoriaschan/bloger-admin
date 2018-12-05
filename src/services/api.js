@@ -1,6 +1,41 @@
 import { stringify } from 'qs';
 import request from '@/utils/request';
 
+// 查询文章列表
+export async function queryArticle(params) {
+  return request(`/api/article?${stringify(params)}`);
+}
+// 删除文章
+export async function removeArticle(params) {
+  return request('/api/article', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'delete',
+    },
+  });
+}
+// 添加文章
+export async function addArticle(params) {
+  return request('/api/article', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
+    },
+  });
+}
+// 更新文章
+export async function updateArticle(params) {
+  return request('/api/article', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'update',
+    },
+  });
+}
+
 export async function queryProjectNotice() {
   return request('/api/project/notice');
 }
@@ -42,7 +77,6 @@ export async function updateRule(params) {
     },
   });
 }
-
 export async function fakeSubmitForm(params) {
   return request('/api/forms', {
     method: 'POST',
