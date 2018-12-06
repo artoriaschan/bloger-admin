@@ -1,7 +1,7 @@
-import { queryArticles, removeArticle, addArticle, updateArticle } from '@/services/api';
+import { queryTags, addTag, updateTag, deleteTag } from '@/services/api';
 
 export default {
-  namespace: 'article',
+  namespace: 'tags',
   state: {
     data: {
       list: [],
@@ -9,31 +9,35 @@ export default {
     },
   },
   effects:{
-    // 查询文章列表
     *fetch({ payload }, { call, put }) {
-      const response = yield call(queryArticles, payload);
+      const response = yield call(queryTags, payload);
       yield put({
         type: 'save',
         payload: response.data,
       });
     },
-    // 删除文章
-    *remove({ payload, callback }, { call, put }) {
-      const response = yield call(removeArticle, payload);
-      yield put({
-        type: 'save',
-        payload: response.data,
-      });
-      if (callback) callback(response);
-    },
-    // 添加文章
     *add({ payload, callback }, { call, put }) {
-      const response = yield call(addArticle, payload);
+      const response = yield call(addTag, payload);
+      yield put({
+        type: 'save',
+        payload: response.data,
+      });
       if (callback) callback(response);
     },
-    // 更新文章
+    *remove({ payload, callback }, { call, put }) {
+      const response = yield call(updateTag, payload);
+      yield put({
+        type: 'save',
+        payload: response.data,
+      });
+      if (callback) callback(response);
+    },
     *update({ payload, callback }, { call, put }) {
-      const response = yield call(updateArticle, payload);
+      const response = yield call(deleteTag, payload);
+      yield put({
+        type: 'save',
+        payload: response.data,
+      });
       if (callback) callback(response);
     },
   },

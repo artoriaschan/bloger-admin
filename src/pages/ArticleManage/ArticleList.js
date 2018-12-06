@@ -16,7 +16,6 @@ import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 import styles from './ArticleList.less';
 
 const { confirm } = Modal;
-const tagsColor = ["#f50", "#2db7f5", "#87d068", "#108ee9"]
 const getValue = obj =>
   Object.keys(obj)
     .map(key => obj[key])
@@ -48,7 +47,7 @@ class ArticleList extends PureComponent {
     },
     {
       title: '文章类型',
-      dataIndex: 'cate',
+      dataIndex: 'cates',
       filters: [
         {
           text: "前端",
@@ -56,7 +55,10 @@ class ArticleList extends PureComponent {
         }
       ],
       render(val){
-        return val.map((elem,index) => <Tag key={elem} color={tagsColor[index % 4]}>{elem}</Tag>)
+        if(val) {
+          return val.map((elem) => <Tag key={elem.id}>{elem.catename}</Tag>)
+        }
+        return ""
       },
       width: 100
     },
@@ -70,7 +72,10 @@ class ArticleList extends PureComponent {
         }
       ],
       render(val){
-        return val.map((elem,index) => <Tag key={elem} color={tagsColor[index % 4]}>{elem}</Tag>)
+        if(val) {
+          return val.map((elem) => <Tag key={elem.id} color={elem.color}>{elem.tagname}</Tag>)
+        }
+        return ""
       },
       width: 100
     },
@@ -145,18 +150,6 @@ class ArticleList extends PureComponent {
     });
   }
 
-  handleFormReset = () => {
-    const { form, dispatch } = this.props;
-    form.resetFields();
-    this.setState({
-      formValues: {},
-    });
-    dispatch({
-      type: 'article/fetch',
-      payload: {},
-    });
-  };
-
   toggleForm = () => {
     const { expandForm } = this.state;
     this.setState({
@@ -173,9 +166,9 @@ class ArticleList extends PureComponent {
   handleRouteToEditor = (articleId) => {
     const { history } = this.props;
     if(articleId) {
-      history.push(`/articlemanage/create-article?articleId=${  articleId}`)
+      history.push(`/articlemanage/createarticle?articleId=${articleId}`)
     }else{
-      history.push("/articlemanage/create-article")
+      history.push("/articlemanage/createarticle")
     }
   }
 
@@ -231,7 +224,7 @@ class ArticleList extends PureComponent {
 
   render() {
     const {
-      article: { articlesData },
+      article: { data },
       loading,
     } = this.props;
     const { selectedRows, } = this.state;
@@ -252,7 +245,7 @@ class ArticleList extends PureComponent {
             <StandardTable
               selectedRows={selectedRows}
               loading={loading}
-              data={articlesData}
+              data={data}
               columns={this.columns}
               onSelectRow={this.handleSelectRows}
               onChange={this.handleStandardTableChange}

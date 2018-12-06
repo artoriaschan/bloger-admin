@@ -35,8 +35,8 @@ const getValue = obj =>
     .join(',');
 
 /* eslint react/no-multi-comp:0 */
-@connect(({ rule, loading }) => ({
-  rule,
+@connect(({ userlist, loading }) => ({
+  userlist,
   loading: loading.models.rule,
 }))
 @Form.create()
@@ -112,7 +112,7 @@ class TableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'rule/fetch',
+      type: 'userlist/fetch',
     });
   }
 
@@ -137,7 +137,7 @@ class TableList extends PureComponent {
     }
 
     dispatch({
-      type: 'rule/fetch',
+      type: 'userlist/fetch',
       payload: params,
     });
   };
@@ -149,7 +149,7 @@ class TableList extends PureComponent {
       formValues: {},
     });
     dispatch({
-      type: 'rule/fetch',
+      type: 'userlist/fetch',
       payload: {},
     });
   };
@@ -169,7 +169,7 @@ class TableList extends PureComponent {
     switch (e.key) {
       case 'remove':
         dispatch({
-          type: 'rule/remove',
+          type: 'userlist/remove',
           payload: {
             key: selectedRows.map(row => row.key),
           },
@@ -204,42 +204,15 @@ class TableList extends PureComponent {
         formValues: values,
       });
       dispatch({
-        type: 'rule/fetch',
+        type: 'userlist/fetch',
         payload: values,
       });
     });
   };
 
-  handleAdd = fields => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'rule/add',
-      payload: {
-        desc: fields.desc,
-      },
-    });
-
-    message.success('添加成功');
-  };
-
-  handleUpdate = fields => {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'rule/update',
-      payload: {
-        name: fields.name,
-        desc: fields.desc,
-        key: fields.key,
-      },
-    });
-
-    message.success('配置成功');
-    this.handleUpdateModalVisible();
-  };
-
   render() {
     const {
-      rule: { data },
+      userlist: { data },
       loading,
     } = this.props;
     const { selectedRows } = this.state;

@@ -2,7 +2,11 @@ import { stringify } from 'qs';
 import request from '@/utils/request';
 
 // 查询文章列表
-export async function queryArticle(params) {
+export async function queryArticles(params) {
+  return request(`/api/articles?${stringify(params)}`);
+}
+// 查询文章详情
+export function queryArticle(params) {
   return request(`/api/article?${stringify(params)}`);
 }
 // 删除文章
@@ -32,6 +36,86 @@ export async function updateArticle(params) {
     body: {
       ...params,
       method: 'update',
+    },
+  });
+}
+// 查询分类
+export async function queryCates(params) {
+  return request('/api/category', {
+    method: 'POST',
+    body: {
+      params,
+      method: 'query',
+    },
+  });
+}
+// 添加分类
+export async function addCates(params) {
+  return request('/api/category', {
+    method: 'POST',
+    body: {
+      params,
+      method: 'post',
+    },
+  });
+}
+// 更新分类
+export async function updateCates(params) {
+  return request('/api/category', {
+    method: 'POST',
+    body: {
+      params,
+      method: 'update',
+    },
+  });
+}
+// 删除分类
+export async function deleteCates(params) {
+  return request('/api/category', {
+    method: 'POST',
+    body: {
+      params,
+      method: 'delete',
+    },
+  });
+}
+// 查询标签
+export async function queryTags(params) {
+  return request('/api/tags', {
+    method: 'POST',
+    body: {
+      params,
+      method: 'query',
+    },
+  });
+}
+// 添加标签
+export async function addTag(params) {
+  return request('/api/tags', {
+    method: 'POST',
+    body: {
+      params,
+      method: 'post',
+    },
+  });
+}
+// 更新标签
+export async function updateTag(params) {
+  return request('/api/tags', {
+    method: 'POST',
+    body: {
+      params,
+      method: 'update',
+    },
+  });
+}
+// 删除标签
+export async function deleteTag(params) {
+  return request('/api/tags', {
+    method: 'POST',
+    body: {
+      params,
+      method: 'delete',
     },
   });
 }
@@ -86,10 +170,6 @@ export async function fakeSubmitForm(params) {
 
 export async function fakeChartData() {
   return request('/api/fake_chart_data');
-}
-
-export async function queryTags() {
-  return request('/api/tags');
 }
 
 export async function queryBasicProfile() {

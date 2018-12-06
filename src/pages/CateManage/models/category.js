@@ -1,49 +1,46 @@
-import { queryRule, removeRule, addRule, updateRule } from '@/services/api';
+import { queryCates, addCates, updateCates, deleteCates } from '@/services/api';
 
 export default {
-  namespace: 'rule',
+  namespace: 'category',
   state: {
     data: {
       list: [],
       pagination: {},
     },
   },
-
-  effects: {
+  effects:{
     *fetch({ payload }, { call, put }) {
-      const response = yield call(queryRule, payload);
-      console.log(response)
+      const response = yield call(queryCates, payload);
       yield put({
         type: 'save',
-        payload: response,
+        payload: response.data,
       });
     },
     *add({ payload, callback }, { call, put }) {
-      const response = yield call(addRule, payload);
+      const response = yield call(addCates, payload);
       yield put({
         type: 'save',
-        payload: response,
+        payload: response.data,
       });
-      if (callback) callback();
+      if (callback) callback(response);
     },
     *remove({ payload, callback }, { call, put }) {
-      const response = yield call(removeRule, payload);
+      const response = yield call(updateCates, payload);
       yield put({
         type: 'save',
-        payload: response,
+        payload: response.data,
       });
-      if (callback) callback();
+      if (callback) callback(response);
     },
     *update({ payload, callback }, { call, put }) {
-      const response = yield call(updateRule, payload);
+      const response = yield call(deleteCates, payload);
       yield put({
         type: 'save',
-        payload: response,
+        payload: response.data,
       });
-      if (callback) callback();
+      if (callback) callback(response);
     },
   },
-
   reducers: {
     save(state, action) {
       return {
@@ -52,4 +49,4 @@ export default {
       };
     },
   },
-};
+}

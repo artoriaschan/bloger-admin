@@ -48,7 +48,7 @@ export default [
         name: 'usermanage',
         routes: [
           {
-            path: '/usermanage/user-list',
+            path: '/usermanage/userlist',
             name: 'userlist',
             component: './UserManage/UserList',
           }
@@ -61,53 +61,14 @@ export default [
         name: 'articlemanage',
         routes: [
           {
-            path: '/articlemanage/article-list',
+            path: '/articlemanage/articlelist',
             name: 'articlelist',
             component: './ArticleManage/ArticleList',
           },
           {
-            path: '/articlemanage/create-article',
+            path: '/articlemanage/createarticle',
             name: 'createarticle',
             component: './ArticleManage/CreateArticle',
-          }
-        ],
-      },
-      // 留言管理
-      {
-        path: '/messagemanage',
-        icon: 'message',
-        name: 'messagemanage',
-        routes: [
-          {
-            path: '/messagemanage/message-list',
-            name: 'messagelist',
-            component: './MessageManage/MessageList',
-          }
-        ],
-      },
-      // 标签管理
-      {
-        path: '/tagsmanage',
-        icon: 'tags',
-        name: 'tagsmanage',
-        routes: [
-          {
-            path: '/tagsmanage/tags-list',
-            name: 'tagslist',
-            component: './TagsManage/TagsList',
-          }
-        ],
-      },
-      // 时间轴管理
-      {
-        path: '/timelinemanage',
-        icon: 'hourglass',
-        name: 'timelinemanage',
-        routes: [
-          {
-            path: '/timelinemanage/timeline-list',
-            name: 'timelinelist',
-            component: './TimelineManage/TimelineList',
           }
         ],
       },
@@ -124,6 +85,45 @@ export default [
           }
         ],
       },
+      // 标签管理
+      {
+        path: '/tagsmanage',
+        icon: 'tags',
+        name: 'tagsmanage',
+        routes: [
+          {
+            path: '/tagsmanage/tags-list',
+            name: 'tagslist',
+            component: './TagsManage/TagsList',
+          }
+        ],
+      },
+      // // 时间轴管理
+      // {
+      //   path: '/timelinemanage',
+      //   icon: 'hourglass',
+      //   name: 'timelinemanage',
+      //   routes: [
+      //     {
+      //       path: '/timelinemanage/timeline-list',
+      //       name: 'timelinelist',
+      //       component: './TimelineManage/TimelineList',
+      //     }
+      //   ],
+      // },
+      // // 留言管理
+      // {
+      //   path: '/messagemanage',
+      //   icon: 'message',
+      //   name: 'messagemanage',
+      //   routes: [
+      //     {
+      //       path: '/messagemanage/message-list',
+      //       name: 'messagelist',
+      //       component: './MessageManage/MessageList',
+      //     }
+      //   ],
+      // },
       // forms
       // {
       //   path: '/form',
