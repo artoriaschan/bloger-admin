@@ -95,12 +95,12 @@ export default {
       });
       return;
     }
-    if (password === '123456' && userName === 'artorias') {
+    if (password === '123456' && userName === '544396118@qq.com') {
       res.send({
         code: 1,
         message: "登陆成功",
         data: {
-          currentAuthority: 'artorias',
+          currentAuthority: 'awdasdasdawdasdasdasdsadasdw',
         }
       });
       return;
