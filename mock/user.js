@@ -72,41 +72,48 @@ export default {
       address: 'Sidney No. 1 Lake Park',
     },
   ],
+
   'POST /api/login/account': (req, res) => {
-    const { password, userName, type } = req.body;
+    const { password, userName } = req.body;
     if (password === 'ant.design' && userName === 'admin') {
       res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'admin',
+        code: 1,
+        message: "登陆成功",
+        data: {
+          currentAuthority: 'admin',
+        }
       });
       return;
     }
     if (password === 'ant.design' && userName === 'user') {
       res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'user',
+        code: 1,
+        message: "登陆成功",
+        data: {
+          currentAuthority: 'user',
+        }
       });
       return;
     }
     if (password === '123456' && userName === 'artorias') {
       res.send({
-        status: 'ok',
-        type,
-        currentAuthority: 'artorias',
+        code: 1,
+        message: "登陆成功",
+        data: {
+          currentAuthority: 'artorias',
+        }
       });
       return;
     }
     res.send({
-      status: 'error',
-      type,
-      currentAuthority: 'guest',
+      code: 0,
+      message: "账号密码错误",
+      data: {
+        currentAuthority: 'guest',
+      }
     });
   },
-  'POST /api/register': (req, res) => {
-    res.send({ status: 'ok', currentAuthority: 'user' });
-  },
+
   'GET /api/500': (req, res) => {
     res.status(500).send({
       timestamp: 1513932555104,

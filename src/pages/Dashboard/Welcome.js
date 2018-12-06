@@ -12,7 +12,7 @@ class Welcome extends PureComponent {
   render() {
     return (
       <div className={styles.welcome}>
-        <img src={welcome} style={{width: "100%"}} alt="欢迎" />
+        <img src={welcome} style={{width: "100%", height: "100%"}} alt="欢迎" />
       </div>
     )
   }
