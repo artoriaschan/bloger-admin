@@ -90,6 +90,14 @@ export default {
       });
       return;
     }
+    if (password === '123456' && userName === 'artorias') {
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: 'artorias',
+      });
+      return;
+    }
     res.send({
       status: 'error',
       type,

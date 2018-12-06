@@ -3,7 +3,6 @@ import { formatMessage } from 'umi/locale';
 import { Layout, message } from 'antd';
 import Animate from 'rc-animate';
 import { connect } from 'dva';
-import router from 'umi/router';
 import GlobalHeader from '@/components/GlobalHeader';
 import TopNavHeader from '@/components/TopNavHeader';
 import styles from './Header.less';
@@ -41,6 +40,7 @@ class HeaderView extends PureComponent {
     return collapsed ? 'calc(100% - 80px)' : 'calc(100% - 256px)';
   };
 
+  // 清除通知事件
   handleNoticeClear = type => {
     message.success(
       `${formatMessage({ id: 'component.noticeIcon.cleared' })} ${formatMessage({
@@ -54,20 +54,9 @@ class HeaderView extends PureComponent {
     });
   };
 
+  // 下拉菜单点击事件
   handleMenuClick = ({ key }) => {
     const { dispatch } = this.props;
-    if (key === 'userCenter') {
-      router.push('/account/center');
-      return;
-    }
-    if (key === 'triggerError') {
-      router.push('/exception/trigger');
-      return;
-    }
-    if (key === 'userinfo') {
-      router.push('/account/settings/base');
-      return;
-    }
     if (key === 'logout') {
       dispatch({
         type: 'login/logout',
@@ -75,6 +64,7 @@ class HeaderView extends PureComponent {
     }
   };
 
+  // 查询通知
   handleNoticeVisibleChange = visible => {
     if (visible) {
       const { dispatch } = this.props;

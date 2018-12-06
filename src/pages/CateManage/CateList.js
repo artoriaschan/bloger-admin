@@ -306,7 +306,7 @@ class TableList extends PureComponent {
       handleModalVisible: this.handleModalVisible,
     };
     return (
-      <PageHeaderWrapper title="查询表格">
+      <PageHeaderWrapper title="分类列表">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderSimpleForm()}</div>

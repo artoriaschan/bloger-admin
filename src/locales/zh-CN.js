@@ -1,15 +1,3 @@
-import analysis from './zh-CN/analysis';
-import exception from './zh-CN/exception';
-import form from './zh-CN/form';
-import globalHeader from './zh-CN/globalHeader';
-import login from './zh-CN/login';
-import menu from './zh-CN/menu';
-import monitor from './zh-CN/monitor';
-import result from './zh-CN/result';
-import settingDrawer from './zh-CN/settingDrawer';
-import settings from './zh-CN/settings';
-import pwa from './zh-CN/pwa';
-
 export default {
   'navBar.lang': '语言',
   'layout.user.link.help': '帮助',
@@ -17,17 +5,78 @@ export default {
   'layout.user.link.terms': '条款',
   'app.home.introduce': '介绍',
   'app.forms.basic.title': '基础表单',
-  'app.forms.basic.description':
-    '表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。',
-  ...analysis,
-  ...exception,
-  ...form,
-  ...globalHeader,
-  ...login,
-  ...menu,
-  ...monitor,
-  ...result,
-  ...settingDrawer,
-  ...settings,
-  ...pwa,
+  'app.forms.basic.description': '表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景。',
+  // 头部信息
+  'component.globalHeader.notification': '通知',
+  'component.globalHeader.notification.empty': '你已查看所有通知',
+  'component.noticeIcon.clear': '清空',
+  'component.noticeIcon.cleared': '清空了',
+  'component.noticeIcon.empty': '暂无数据',
+  'menu.account.logout': '退出登录',
+
+  'menu.home': '首页',
+  'menu.dashboard': 'Dashboard',
+  'menu.dashboard.welcome': '欢迎页',
+  'menu.usermanage': '用户管理',
+  'menu.usermanage.userlist': '用户列表',
+  'menu.articlemanage': '文章管理',
+  'menu.articlemanage.articlelist': '文章列表',
+  'menu.articlemanage.createarticle': '文章创作',
+  'menu.messagemanage': '留言管理',
+  'menu.messagemanage.messagelist': '留言列表',
+  'menu.tagsmanage': '标签管理',
+  'menu.tagsmanage.tagslist': '标签列表',
+  'menu.timelinemanage': '时间轴管理',
+  'menu.timelinemanage.timelinelist': '时间轴列表',
+  'menu.catemanage': '分类管理',
+  'menu.catemanage.catelist': '分类列表',
+
+  // 异常信息
+  'app.exception.back': '返回首页',
+  'app.exception.description.403': '抱歉，你无权访问该页面',
+  'app.exception.description.404': '抱歉，你访问的页面不存在',
+  'app.exception.description.500': '抱歉，服务器出错了',
+
+  // 登录验证
+  'app.login.userName': '用户名',
+  'app.login.password': '密码',
+  'app.login.message-invalid-credentials': '账户或密码错误',
+  'app.login.message-invalid-verification-code': '验证码错误',
+  'app.login.tab-login-credentials': '账户密码登录',
+  'app.login.tab-login-mobile': '手机号登录',
+  'app.login.remember-me': '自动登录',
+  'app.login.forgot-password': '忘记密码',
+  'app.login.sign-in-with': '其他登录方式',
+  'app.login.signup': '注册账户',
+  'app.login.login': '登录',
+  'app.register.register': '注册',
+  'app.register.get-verification-code': '获取验证码',
+  'app.register.sign-in': '使用已有账户登录',
+  'app.register-result.msg': '你的账户：{email} 注册成功',
+  'app.register-result.activation-email': '激活邮件已发送到你的邮箱中，邮件有效期为24小时。请及时登录邮箱，点击邮件中的链接激活帐户。',
+  'app.register-result.back-home': '返回首页',
+  'app.register-result.view-mailbox': '查看邮箱',
+  'validation.email.required': '请输入邮箱地址！',
+  'validation.email.wrong-format': '邮箱地址格式错误！',
+  'validation.userName.required': '请输入用户名!',
+  'validation.password.required': '请输入密码！',
+  'validation.password.twice': '两次输入的密码不匹配!',
+  'validation.password.strength.msg': '请至少输入 6 个字符。请不要使用容易被猜到的密码。',
+  'validation.password.strength.strong': '强度：强',
+  'validation.password.strength.medium': '强度：中',
+  'validation.password.strength.short': '强度：太短',
+  'validation.confirm-password.required': '请确认密码！',
+  'validation.phone-number.required': '请输入手机号！',
+  'validation.phone-number.wrong-format': '手机号格式错误！',
+  'validation.verification-code.required': '请输入验证码！',
+  'validation.title.required': '请输入标题',
+  'validation.date.required': '请选择起止日期',
+  'validation.goal.required': '请输入目标描述',
+  'validation.standard.required': '请输入衡量标准',
+
+  // pwa
+  'app.pwa.offline': '当前处于离线状态',
+  'app.pwa.serviceworker.updated': '有新内容',
+  'app.pwa.serviceworker.updated.hint': '请点击“刷新”按钮或者手动刷新页面',
+  'app.pwa.serviceworker.updated.ok': '刷新',
 };

@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Layout } from 'antd';
 import DocumentTitle from 'react-document-title';
 import isEqual from 'lodash/isEqual';
@@ -15,13 +15,9 @@ import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
 import Exception403 from '../pages/Exception/403';
-import PageLoading from '@/components/PageLoading';
 import SiderMenu from '@/components/SiderMenu';
 
 import styles from './BasicLayout.less';
-
-// lazy load SettingDrawer
-const SettingDrawer = React.lazy(() => import('@/components/SettingDrawer'));
 
 const { Content } = Layout;
 
@@ -60,14 +56,13 @@ class BasicLayout extends React.PureComponent {
   componentDidMount() {
     const {
       dispatch,
-      route: { routes, authority },
+      route: { routes, authority }
     } = this.props;
+    // 获取当前用户信息
     dispatch({
       type: 'user/fetchCurrent',
     });
-    dispatch({
-      type: 'setting/getSetting',
-    });
+    // 菜单,面包屑信息
     dispatch({
       type: 'menu/getMenuData',
       payload: { routes, authority },
@@ -148,15 +143,6 @@ class BasicLayout extends React.PureComponent {
     });
   };
 
-  renderSettingDrawer = () => {
-    // Do not render SettingDrawer in production
-    // unless it is deployed in preview.pro.ant.design as demo
-    if (process.env.NODE_ENV === 'production' && APP_TYPE !== 'site') {
-      return null;
-    }
-    return <SettingDrawer />;
-  };
-
   render() {
     const {
       navTheme,
@@ -220,7 +206,6 @@ class BasicLayout extends React.PureComponent {
             )}
           </ContainerQuery>
         </DocumentTitle>
-        <Suspense fallback={<PageLoading />}>{this.renderSettingDrawer()}</Suspense>
       </React.Fragment>
     );
   }
