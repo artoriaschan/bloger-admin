@@ -16,7 +16,7 @@ import {
 import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
-import styles from './CateList.less';
+import styles from '../styles/TableList.less';
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -321,6 +321,7 @@ class TableList extends PureComponent {
               )}
             </div>
             <StandardTable
+              rowKey="id"
               selectedRows={selectedRows}
               loading={loading}
               data={data}

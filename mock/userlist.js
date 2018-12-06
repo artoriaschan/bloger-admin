@@ -4,17 +4,17 @@ import { parse } from 'url';
 let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
-    key: i,
+    id: i,
     href: 'https://ant.design',
     avatar: [
       'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
       'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
     ][i % 2],
-    email:`1851310${parseInt(Math.random() * 10000)}@qq.com`,
+    email:`1851310${parseInt(Math.random() * 10000, 10)}@qq.com`,
     username: `曲丽丽 ${i}`,
     type: (i%2) === 0 ? 1 : 9,
     status: i % 2,
-    mobile: `1851310${parseInt(Math.random() * 10000)}`,
+    mobile: `1851310${parseInt(Math.random() * 10000, 10)}`,
     registertime: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
   });
 }
@@ -78,17 +78,17 @@ function postRule(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, name, desc, key } = body;
+  const { method, name, desc, id } = body;
 
   switch (method) {
     /* eslint no-case-declarations:0 */
     case 'delete':
-      tableListDataSource = tableListDataSource.filter(item => key.indexOf(item.key) === -1);
+      tableListDataSource = tableListDataSource.filter(item => id.indexOf(item.id) === -1);
       break;
     case 'post':
       const i = Math.ceil(Math.random() * 10000);
       tableListDataSource.unshift({
-        key: i,
+        id: i,
         href: 'https://ant.design',
         avatar: [
           'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
@@ -107,7 +107,7 @@ function postRule(req, res, u, b) {
       break;
     case 'update':
       tableListDataSource = tableListDataSource.map(item => {
-        if (item.key === key) {
+        if (item.id === id) {
           Object.assign(item, { desc, name });
           return item;
         }

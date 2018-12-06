@@ -41,17 +41,14 @@ class CreateArticle extends PureComponent {
     }
   }
 
-  componentWillMount() {
-    // 判断是否是含有articleId的路由
-    this.handleSearchTag()
-    this.handleSearchCategory()
-  }
-
 	componentDidMount() {
+    // 判断是否是含有articleId的路由
     const articleId = this.isEditArticle()
     this.setState({
       articleId
     })
+    this.handleSearchTag()
+    this.handleSearchCategory()
 		this.state.smde = new SimpleMDE({
 			element: document.getElementById('editor').childElementCount,
 			autofocus: true,
@@ -99,7 +96,7 @@ class CreateArticle extends PureComponent {
       dispatch({
         type: 'tags/fetch',
         payload: {},
-        callback(res){
+        callback: (res) => {
           const { data } = res
           this.setState({
             allTags: data.list
@@ -120,7 +117,7 @@ class CreateArticle extends PureComponent {
       dispatch({
         type: 'category/fetch',
         payload: {},
-        callback(res){
+        callback: (res) => {
           const { data } = res
           this.setState({
             allCategory: data.list

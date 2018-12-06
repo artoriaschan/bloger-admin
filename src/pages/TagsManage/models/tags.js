@@ -9,12 +9,13 @@ export default {
     },
   },
   effects:{
-    *fetch({ payload }, { call, put }) {
+    *fetch({ payload, callback }, { call, put }) {
       const response = yield call(queryTags, payload);
       yield put({
         type: 'save',
         payload: response.data,
       });
+      if (callback) callback(response);
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addTag, payload);

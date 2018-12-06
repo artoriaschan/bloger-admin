@@ -4,7 +4,7 @@ import { parse } from 'url';
 let tableListDataSource = [];
 for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
-    key: i,
+    id: i,
     title: `服务器小白的我,是如何将node+mongodb项目部署在服务器上并进行性能优化的 ${i}`,
     desc: `本文讲解的是：做为前端开发人员，对服务器的了解还是小白的我，是如何一步步将 node+mongodb 项目部署在阿里云 centos 7.3 的服务器上，并进行性能优化，达到页面 1 秒内看到 loading ，3 秒内看到首屏内容的。 ${i}`,
     createtime: new Date(`2018-07-${Math.floor(i / 2) + 1}`),
@@ -109,7 +109,7 @@ function postArticle(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, name, desc, key } = body;
+  const { method, name, desc, id } = body;
 
 
   let result = {};
@@ -117,10 +117,10 @@ function postArticle(req, res, u, b) {
     /* eslint no-case-declarations:0 */
     case 'delete':
       tableListDataSource = tableListDataSource.filter(item => {
-        if(key instanceof Array) {
-          return key.indexOf(item.key) === -1
+        if(id instanceof Array) {
+          return id.indexOf(item.id) === -1
         }
-        return key !== item.key
+        return id !== item.id
       });
       result = {
         code: 1,

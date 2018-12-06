@@ -79,7 +79,7 @@ export default [
         name: 'catemanage',
         routes: [
           {
-            path: '/catemanage/cate-list',
+            path: '/catemanage/catelist',
             name: 'catelist',
             component: './CateManage/CateList',
           }
@@ -92,7 +92,7 @@ export default [
         name: 'tagsmanage',
         routes: [
           {
-            path: '/tagsmanage/tags-list',
+            path: '/tagsmanage/tagslist',
             name: 'tagslist',
             component: './TagsManage/TagsList',
           }

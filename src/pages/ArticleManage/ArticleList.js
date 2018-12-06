@@ -13,7 +13,7 @@ import {
 import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
-import styles from './ArticleList.less';
+import styles from '../styles/TableList.less';
 
 const { confirm } = Modal;
 const getValue = obj =>
@@ -180,7 +180,7 @@ class ArticleList extends PureComponent {
           dispatch({
             type: 'article/remove',
             payload: {
-              key: record.key,
+              id: record.id,
             },
             callback: (res) => {
               resolve(res)
@@ -243,6 +243,7 @@ class ArticleList extends PureComponent {
               )}
             </div>
             <StandardTable
+              rowKey="id"
               selectedRows={selectedRows}
               loading={loading}
               data={data}

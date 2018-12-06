@@ -8,14 +8,13 @@ import {
   Button,
   Dropdown,
   Menu,
-  message,
   Divider,
   Avatar
 } from 'antd';
 import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
-import styles from './UserList.less';
+import styles from '../styles/TableList.less';
 
 // 用户权限
 const userTypes = [{type: 1, name: "普通用户"}, {type: 9, name: "管理员"}]
@@ -240,6 +239,7 @@ class TableList extends PureComponent {
               )}
             </div>
             <StandardTable
+              rowKey="id"
               selectedRows={selectedRows}
               loading={loading}
               data={data}

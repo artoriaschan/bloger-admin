@@ -12,12 +12,13 @@ import {
   Modal,
   message,
   Divider,
+  Icon,
   Tag
 } from 'antd';
 import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-
-import styles from './TagsList.less';
+import { SketchPicker } from 'react-color';
+import styles from '../styles/TableList.less';
 
 const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
@@ -28,32 +29,101 @@ const getValue = obj =>
     .join(',');
 
 // 创建分类弹窗
-const CreateForm = Form.create()(props => {
-  const { modalVisible, form, handleAdd, handleModalVisible } = props;
-  const okHandle = () => {
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
-      form.resetFields();
-      handleAdd(fieldsValue);
-    });
-  };
-  return (
-    <Modal
-      destroyOnClose
-      title="创建分类"
-      visible={modalVisible}
-      onOk={okHandle}
-      onCancel={() => handleModalVisible()}
-    >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类名称">
-        {form.getFieldDecorator('catename', {
-          rules: [{ required: true, message: '请输入分类名称！'}],
-        })(<Input placeholder="请输入分类名称" />)}
-      </FormItem>
-    </Modal>
-  );
-});
+@Form.create()
+class CreateForm extends PureComponent {
+  constructor(props){
+    super(props)
+    this.state={
+      background: '#fff',
+      colorPickerVisible: false
+    };
+  }
 
+  handleShowColorPicker = (value) => {
+    this.setState({
+      colorPickerVisible: value
+    })
+  }
+
+  handleChangeComplete = (color) => {
+    const { form: {setFieldsValue} } = this.props
+    console.log(color.hex)
+    this.setState({ background: color.hex });
+    setFieldsValue({
+      color: color.hex
+    })
+  };
+
+  render(){
+    const { modalVisible, form, handleAdd, handleModalVisible } = this.props;
+    const {background, colorPickerVisible} = this.state
+    const okHandle = () => {
+      form.validateFields((err, fieldsValue) => {
+        if (err) return;
+        form.resetFields();
+        handleAdd(fieldsValue);
+      });
+    };
+
+    return (
+      <Modal
+        destroyOnClose
+        title="创建标签"
+        visible={modalVisible}
+        onOk={okHandle}
+        onCancel={() => handleModalVisible()}
+        style={{position: "relaticve"}}
+      >
+        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="标签名称">
+          {form.getFieldDecorator('tagname', {
+            rules: [{ required: true, message: '请输入分类名称！'}],
+          })(<Input placeholder="请输入分类名称" />)}
+        </FormItem>
+        <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="标签颜色">
+          {form.getFieldDecorator('color', {
+            rules: [{ required: true, message: '请输入分类名称！'}],
+          })(
+            <Input placeholder="请选择颜色" disabled />
+          )}
+        </FormItem>
+        <Button onClick={() => this.handleShowColorPicker(true)} type="primary">点击选择颜色</Button>
+        { colorPickerVisible ? (
+          <div style={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              width: "100%",
+              height: "100%",
+              zIndex: "20"
+            }}
+          >
+            <div style={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "#000000",
+              opacity:"0.6"}}
+            />
+            <Icon
+              type="close"
+              style={{
+                position: "absolute",
+                top: "20px",
+                right: "20px",
+                color: "#ffffff"
+              }}
+              onClick={() => this.handleShowColorPicker(false)}
+            />
+            <SketchPicker
+              className={styles.colorPicker}
+              color={background}
+              onChangeComplete={this.handleChangeComplete}
+            />
+          </div>):("")
+        }
+      </Modal>
+    );
+  }
+}
 /* eslint react/no-multi-comp:0 */
 @connect(({ tags , loading }) => ({
   tags,
@@ -325,6 +395,7 @@ class TableList extends PureComponent {
               )}
             </div>
             <StandardTable
+              rowKey="id"
               selectedRows={selectedRows}
               loading={loading}
               data={data}
