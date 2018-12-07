@@ -235,7 +235,7 @@ class CreateArticle extends PureComponent {
           </Col>
           <Col md={24} sm={24}>
             <FormItem label="封面地址">
-              {getFieldDecorator('imgSrc', {
+              {getFieldDecorator('cover', {
                 rules: [{ required: true, message: '请输入封面地址', whitespace: true }],
               })(
                 <Input placeholder="请输入封面地址" />
