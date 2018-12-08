@@ -45,7 +45,8 @@ export default {
   'app.login.forgot-password': '忘记密码',
   'app.login.login': '登录',
   'app.register-result.back-home': '返回首页',
-
+  'validation.userName.required': '请填写邮箱',
+  'validation.password.required': '请填写密码',
   // pwa
   'app.pwa.offline': '当前处于离线状态',
   'app.pwa.serviceworker.updated': '有新内容',

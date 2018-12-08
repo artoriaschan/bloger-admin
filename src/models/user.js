@@ -16,12 +16,18 @@ export default {
         payload: response,
       });
     },
-    *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      });
+    *fetchCurrent( { payload, callback } , { call, put }) {
+      const response = yield call(queryCurrent, payload);
+      const { code } = response
+      if( code === 1) {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: response.data,
+        });
+      }else{
+        /* eslint-disable no-unused-expressions */
+        callback && callback(response)
+      }
     },
   },
 

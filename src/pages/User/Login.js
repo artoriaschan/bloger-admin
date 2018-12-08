@@ -23,14 +23,14 @@ class LoginPage extends Component {
   };
 
   handleSubmit = (err, values) => {
-    const { type } = this.state;
     if (!err) {
       const { dispatch } = this.props;
+      const { autoLogin } = this.state;
       dispatch({
         type: 'login/login',
         payload: {
           ...values,
-          type
+          autoLogin
         },
         fail: (res) => {
           switch(res.code) {
@@ -69,7 +69,7 @@ class LoginPage extends Component {
         >
           <Tab key="account" tab={formatMessage({ id: 'app.login.tab-login-credentials' })}>
             <UserName
-              name="userName"
+              name="email"
               placeholder={`${formatMessage({ id: 'app.login.userName' })}`}
               rules={[
                 {

@@ -13,12 +13,13 @@ export default {
   effects: {
     *login({ payload, fail}, { call, put }) {
       const response = yield call(accountLogin, payload);
-      yield put({
-        type: 'changeLoginStatus',
-        payload: response,
-      });
+      console.log(response)
       // 登陆成功
       if (response.code === 1) {
+        yield put({
+          type: 'changeLoginStatus',
+          payload: response,
+        });
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -39,6 +40,7 @@ export default {
       }else{
         /* eslint-disable no-unused-expressions */
         fail && fail(response)
+        setAuthority("guest")
       }
     },
     *logout(_, { put }) {
@@ -46,8 +48,9 @@ export default {
         type: 'changeLoginStatus',
         payload: {
           status: false,
-          currentAuthority: 'guest',
-          user: {}
+          data: {
+            currentAuthority: 'guest',
+          }
         },
       });
       reloadAuthorized();
@@ -64,11 +67,11 @@ export default {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      const { code, data } = payload
+      const { data } = payload
       setAuthority(data.currentAuthority);
       return {
         ...state,
-        status: code === 1,
+        status: true,
         user: {
           ...data.user
         }

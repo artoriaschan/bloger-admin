@@ -1,6 +1,7 @@
 import { stringify } from 'qs';
 import request from '@/utils/request';
 
+const baseURL = "//localhost:8088"
 // 查询文章列表
 export async function queryArticles(params) {
   return request(`/api/articles?${stringify(params)}`);
@@ -121,8 +122,9 @@ export async function deleteTag(params) {
 }
 // 登录
 export async function accountLogin(params) {
-  return request('/api/login/account', {
+  console.log(stringify(params))
+  return request(`${baseURL}/api/admin/login`, {
     method: 'POST',
-    body: params,
+    body: stringify(params),
   });
 }

@@ -54,13 +54,17 @@ class BasicLayout extends React.PureComponent {
   }
 
   componentDidMount() {
-    const {
-      dispatch,
-      route: { routes, authority }
-    } = this.props;
+    const { dispatch, route: { routes, authority }} = this.props;
     // 获取当前用户信息
     dispatch({
       type: 'user/fetchCurrent',
+      callback: (res) => {
+        if(res.code !== 1) {
+          dispatch({
+            type: 'login/logout',
+          })
+        }
+      }
     });
     // 菜单,面包屑信息
     dispatch({
