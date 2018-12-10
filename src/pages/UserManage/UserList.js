@@ -9,16 +9,18 @@ import {
   Dropdown,
   Menu,
   Divider,
-  Avatar
+  Avatar,
+  Modal,
+  message
 } from 'antd';
 import StandardTable from '@/components/StandardTable';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
-
 import styles from '../styles/TableList.less';
 
+const { confirm } = Modal;
+
 // 用户权限
-const userTypes = [{type: 1, name: "普通用户"}, {type: 9, name: "管理员"}]
-const accountStatus = [{type: 0, name: "正常"}, {type: 1, name:"冻结"}]
+const userTypes = [{type: 1, name: "普通用户"}, {type: 2, name: "管理员"}]
 
 function getTextByObjectList (list, sourceField, value, targetField){
   for(let i = 0; i < list.length; i += 1) {
@@ -57,6 +59,7 @@ class TableList extends PureComponent {
     {
       title: '权限',
       dataIndex: 'type',
+      filterMultiple: false,
       filters: userTypes.map((elem) => ({
           text: elem.name,
           value: elem.type
@@ -67,13 +70,18 @@ class TableList extends PureComponent {
     },
     {
       title: '状态',
-      dataIndex: 'status',
-      filters: accountStatus.map((elem) => ({
-          text: elem.name,
-          value: elem.type
-      })),
+      dataIndex: 'freezen',
+      filterMultiple: false,
+      filters: [{
+          text: "冻结",
+          value: true,
+        },{
+          text: "正常",
+          value: false,
+        }
+      ],
       render(val){
-        return getTextByObjectList(accountStatus, "type", val, "name") || "未知状态"
+        return val ? "冻结" : "正常"
       }
     },
     {
@@ -85,15 +93,15 @@ class TableList extends PureComponent {
     {
       title: '头像',
       dataIndex: 'avatar',
-      render: val => val ? <Avatar src={val} size={64} /> : ""
+      render: val => val ? <Avatar src={val} size={32} /> : <Avatar icon="user" size={32} />
     },
     {
       title: '操作',
-      render: () => (
+      render: (val, record) => (
         <Fragment>
-          <a onClick={() => {}}>删除</a>
+          <a onClick={() => {this.handleDeleteUser(record)}}>删除</a>
           <Divider type="vertical" />
-          <a onClick={() => {}}>冻结</a>
+          <a onClick={() => {}}>{record.freezen ? "解冻" : "冻结"}</a>
         </Fragment>
       ),
     },
@@ -208,6 +216,43 @@ class TableList extends PureComponent {
       });
     });
   };
+
+  showConfirm = (title, ok) => {
+    confirm({
+      title,
+      content: '删除后无法恢复,确认删除请点击确认',
+      okText: "确认",
+      cancelText: "取消",
+      onOk() {
+        return ok ? ok() : null
+      },
+      onCancel() {},
+    });
+  }
+
+  handleDeleteUser = (record) => {
+    const { dispatch } = this.props;
+    this.showConfirm(`确认删除"${record.email}"这个用户吗?`,
+      () =>
+        new Promise((resolve) => {
+          dispatch({
+            type: 'userlist/remove',
+            payload :{
+              id: record.id,
+            },
+            callback: (res) => {
+              resolve(res)
+            },
+          });
+        })
+        .then(() => {
+          message.success('删除用户成功');
+        })
+        .catch(() => {
+          message.error('删除用户失败')
+        })
+    )
+  }
 
   render() {
     const {

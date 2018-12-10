@@ -2,6 +2,14 @@ import { stringify } from 'qs';
 import request from '@/utils/request';
 
 const baseURL = "//localhost:8088"
+// 查询用户列表
+export async function queryUsers(params) {
+  return request(`${baseURL}/api/admin/users?${stringify(params)}`);
+}
+// 查询用户列表
+export async function removeUsers(params) {
+  return request(`${baseURL}/api/admin/users/delete/${params.id}`);
+}
 // 查询文章列表
 export async function queryArticles(params) {
   return request(`/api/articles?${stringify(params)}`);
