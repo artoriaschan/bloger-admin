@@ -6,9 +6,13 @@ const baseURL = "//localhost:8088"
 export async function queryUsers(params) {
   return request(`${baseURL}/api/admin/users?${stringify(params)}`);
 }
-// 查询用户列表
-export async function removeUsers(params) {
+// 删除用户
+export async function removeUser(params) {
   return request(`${baseURL}/api/admin/users/delete/${params.id}`);
+}
+// 冻结用户
+export async function freezeUser(params) {
+  return request(`${baseURL}/api/admin/users/freeze/${params.id}`);
 }
 // 查询文章列表
 export async function queryArticles(params) {

@@ -101,7 +101,7 @@ class TableList extends PureComponent {
         <Fragment>
           <a onClick={() => {this.handleDeleteUser(record)}}>删除</a>
           <Divider type="vertical" />
-          <a onClick={() => {}}>{record.freezen ? "解冻" : "冻结"}</a>
+          <a onClick={() => {this.handleFreezeUser(record)}}>{record.freezen ? "解冻" : "冻结"}</a>
         </Fragment>
       ),
     },
@@ -252,6 +252,34 @@ class TableList extends PureComponent {
           message.error('删除用户失败')
         })
     )
+  }
+
+  handleFreezeUser = (record) => {
+    const { dispatch } = this.props;
+    if (!record.freezen) {
+      this.showConfirm(`确认冻结"${record.email}"这个用户吗?`,
+        () =>
+          new Promise((resolve) => {
+            dispatch({
+              type: 'userlist/freeze',
+              payload :{
+                id: record.id,
+              },
+              callback: (res) => {
+                resolve(res)
+              },
+            });
+          })
+          .then(() => {
+            message.success('冻结用户成功');
+          })
+          .catch(() => {
+            message.error('冻结用户失败')
+          })
+      )
+    }else{
+      console.log("解冻")
+    }
   }
 
   render() {
