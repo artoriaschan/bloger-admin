@@ -82,13 +82,19 @@ class TableList extends PureComponent {
       title: '创建时间',
       dataIndex: 'createtime',
       sorter: true,
-      render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      render: val => {
+        console.log(val)
+        return (<span>{moment.unix(val).format('YYYY-MM-DD HH:mm:ss')}</span>)
+      },
     },
     {
       title: '修改时间',
-      dataIndex: 'updatetime',
+      dataIndex: 'upadtetime',
       sorter: true,
-      render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      render: val => {
+        console.log(val)
+        return (<span>{moment.unix(val).format('YYYY-MM-DD HH:mm:ss')}</span>)
+      },
     },
     {
       title: '操作',

@@ -13,7 +13,7 @@ export default [
     path: '/',
     component: '../layouts/BasicLayout',
     Routes: ['src/pages/Authorized'],
-    authority: ['chenzheng04@58ganji.com'],
+    authority: ['chenzheng04@58ganji.com', 'danielovelol@163.com'],
     routes: [
       // dashboard
       { path: '/', redirect: '/dashboard/welcome' },

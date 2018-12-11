@@ -27,12 +27,12 @@ export default {
       if (callback) callback(response);
     },
     // 添加文章
-    *add({ payload, callback }, { call, put }) {
+    *add({ payload, callback }, { call }) {
       const response = yield call(addArticle, payload);
       if (callback) callback(response);
     },
     // 更新文章
-    *update({ payload, callback }, { call, put }) {
+    *update({ payload, callback }, { call }) {
       const response = yield call(updateArticle, payload);
       if (callback) callback(response);
     },

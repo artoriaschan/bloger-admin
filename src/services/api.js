@@ -14,6 +14,10 @@ export async function removeUser(params) {
 export async function freezeUser(params) {
   return request(`${baseURL}/api/admin/users/freeze/${params.id}`);
 }
+// 解冻用户
+export async function activiteUser(params) {
+  return request(`${baseURL}/api/admin/users/activite/${params.id}`);
+}
 // 查询文章列表
 export async function queryArticles(params) {
   return request(`/api/articles?${stringify(params)}`);
@@ -34,11 +38,10 @@ export async function removeArticle(params) {
 }
 // 添加文章
 export async function addArticle(params) {
-  return request('/api/article', {
+  return request(`${baseURL}/api/article/post`, {
     method: 'POST',
     body: {
-      ...params,
-      method: 'post',
+      ...params
     },
   });
 }
@@ -54,21 +57,14 @@ export async function updateArticle(params) {
 }
 // 查询分类
 export async function queryCates(params) {
-  return request('/api/category', {
-    method: 'POST',
-    body: {
-      params,
-      method: 'query',
-    },
-  });
+  return request(`${baseURL}/api/cates?${stringify(params)}`);
 }
 // 添加分类
 export async function addCates(params) {
-  return request('/api/category', {
+  return request(`${baseURL}/api/cate/post`, {
     method: 'POST',
     body: {
-      params,
-      method: 'post',
+      ...params,
     },
   });
 }

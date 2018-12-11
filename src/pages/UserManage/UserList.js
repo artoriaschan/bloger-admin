@@ -55,6 +55,7 @@ class TableList extends PureComponent {
     {
       title: '手机号',
       dataIndex: 'mobile',
+      render: (val) => val || "暂无"
     },
     {
       title: '权限',
@@ -88,7 +89,10 @@ class TableList extends PureComponent {
       title: '注册时间',
       dataIndex: 'registertime',
       sorter: true,
-      render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
+      render: val => {
+        console.log(val)
+        return (<span>{moment.unix(val).format('YYYY-MM-DD HH:mm:ss')}</span>)
+      },
     },
     {
       title: '头像',
@@ -278,7 +282,26 @@ class TableList extends PureComponent {
           })
       )
     }else{
-      console.log("解冻")
+      this.showConfirm(`确认解冻"${record.email}"这个用户吗?`,
+        () =>
+          new Promise((resolve) => {
+            dispatch({
+              type: 'userlist/activite',
+              payload :{
+                id: record.id,
+              },
+              callback: (res) => {
+                resolve(res)
+              },
+            });
+          })
+          .then(() => {
+            message.success('解冻用户成功');
+          })
+          .catch(() => {
+            message.error('解冻用户失败')
+          })
+      )
     }
   }
 
