@@ -71,30 +71,24 @@ class TableList extends PureComponent {
       title: '分类名称',
       dataIndex: 'catename',
     },
-    {
-      title: '创建人',
-      dataIndex: 'creater',
-      render(val) {
-        return <span>{val ? val.username : ""}</span>
-      }
-    },
+    // {
+    //   title: '创建人',
+    //   dataIndex: 'creater',
+    //   render(val) {
+    //     return <span>{val ? val.username : ""}</span>
+    //   }
+    // },
     {
       title: '创建时间',
       dataIndex: 'createtime',
       sorter: true,
-      render: val => {
-        console.log(val)
-        return (<span>{moment.unix(val).format('YYYY-MM-DD HH:mm:ss')}</span>)
-      },
+      render: val => (<span>{moment.unix(val).format('YYYY-MM-DD HH:mm:ss')}</span>),
     },
     {
       title: '修改时间',
       dataIndex: 'upadtetime',
       sorter: true,
-      render: val => {
-        console.log(val)
-        return (<span>{moment.unix(val).format('YYYY-MM-DD HH:mm:ss')}</span>)
-      },
+      render: val => (<span>{moment.unix(val).format('YYYY-MM-DD HH:mm:ss')}</span>),
     },
     {
       title: '操作',
@@ -262,7 +256,6 @@ class TableList extends PureComponent {
       },
     });
 
-    message.success('添加成功');
     this.handleModalVisible();
   };
 

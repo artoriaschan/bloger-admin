@@ -1,4 +1,5 @@
 import { queryCates, addCates, updateCates, deleteCates } from '@/services/api';
+import { Notification} from '@/utils/notification'
 
 export default {
   namespace: 'category',

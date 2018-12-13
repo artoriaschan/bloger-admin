@@ -90,21 +90,14 @@ export async function deleteCates(params) {
 }
 // 查询标签
 export async function queryTags(params) {
-  return request('/api/tags', {
-    method: 'POST',
-    body: {
-      params,
-      method: 'query',
-    },
-  });
+  return request(`${baseURL}/api/tags${stringify(params)}`);
 }
 // 添加标签
 export async function addTag(params) {
-  return request('/api/tags', {
+  return request(`${baseURL}/api/tag/post`, {
     method: 'POST',
     body: {
-      params,
-      method: 'post',
+      ...params,
     },
   });
 }

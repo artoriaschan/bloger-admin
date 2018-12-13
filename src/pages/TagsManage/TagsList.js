@@ -47,7 +47,6 @@ class CreateForm extends PureComponent {
 
   handleChangeComplete = (color) => {
     const { form: {setFieldsValue} } = this.props
-    console.log(color.hex)
     this.setState({ background: color.hex });
     setFieldsValue({
       color: color.hex
@@ -145,13 +144,13 @@ class TableList extends PureComponent {
         return <Tag color={record.color}>{val}</Tag>
       }
     },
-    {
-      title: '创建人',
-      dataIndex: 'creater',
-      render(val) {
-        return <span>{val ? val.username : ""}</span>
-      }
-    },
+    // {
+    //   title: '创建人',
+    //   dataIndex: 'creater',
+    //   render(val) {
+    //     return <span>{val ? val.username : ""}</span>
+    //   }
+    // },
     {
       title: '创建时间',
       dataIndex: 'createtime',
@@ -179,7 +178,7 @@ class TableList extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'tags/fetch',
+      type: 'tags/fetch'
     });
   }
 
@@ -326,11 +325,16 @@ class TableList extends PureComponent {
     dispatch({
       type: 'tags/add',
       payload: {
-        catename: fields.catename,
+        tagname: fields.tagname,
+        color: fields.color,
       },
+      callback:(res) => {
+        const { code } = res
+        if (code === 1) {
+          message.success('添加成功');
+        }
+      }
     });
-
-    message.success('添加成功');
     this.handleModalVisible();
   };
 
