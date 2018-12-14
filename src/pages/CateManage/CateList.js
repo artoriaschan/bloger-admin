@@ -28,12 +28,12 @@ const getValue = obj =>
 
 // 创建分类弹窗
 const CreateForm = Form.create()(props => {
-  const { modalVisible, form, handleAdd, handleModalVisible } = props;
+  const { modalVisible, form, handleAdd, handleModalVisible, record } = props;
   const okHandle = () => {
     form.validateFields((err, fieldsValue) => {
       if (err) return;
       form.resetFields();
-      handleAdd(fieldsValue);
+      handleAdd(fieldsValue, record);
     });
   };
   return (
@@ -46,6 +46,7 @@ const CreateForm = Form.create()(props => {
     >
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="分类名称">
         {form.getFieldDecorator('catename', {
+          initialValue: record ? record.catename : "",
           rules: [{ required: true, message: '请输入分类名称！'}],
         })(<Input placeholder="请输入分类名称" />)}
       </FormItem>
@@ -64,6 +65,7 @@ class TableList extends PureComponent {
     modalVisible: false,
     selectedRows: [],
     formValues: {},
+    modeifyRow: {},
   };
 
   columns = [
@@ -94,7 +96,7 @@ class TableList extends PureComponent {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <a onClick={this.handleModalVisible}>编辑</a>
+          <a onClick={() => {this.handleModalVisible(true, record)}}>编辑</a>
           <Divider type="vertical" />
           <a onClick={() => this.handleDeleteCate(record)}>删除</a>
         </Fragment>
@@ -191,7 +193,6 @@ class TableList extends PureComponent {
   handleDeleteCate = (record) => {
     const { dispatch } = this.props
     const { id, catename} = record
-    console.log(record)
     this.showConfirm(`确认删除"${catename}"分类?`,
       () =>
         new Promise((resolve) => {
@@ -241,22 +242,32 @@ class TableList extends PureComponent {
     });
   };
 
-  handleModalVisible = flag => {
+  handleModalVisible = (flag, record) => {
     this.setState({
       modalVisible: !!flag,
+      modeifyRow: record || {}
     });
   };
 
-  handleAdd = fields => {
+  handleAdd = (fields, record) => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'category/add',
-      payload: {
-        catename: fields.catename,
-      },
-    });
-
-    this.handleModalVisible();
+    if ( record.id && record.id !== "" ) {
+      dispatch({
+        type: 'category/update',
+        payload: {
+          id: record.id,
+          catename: fields.catename,
+        },
+      });
+    }else{
+      dispatch({
+        type: 'category/add',
+        payload: {
+          catename: fields.catename,
+        },
+      });
+    }
+    this.handleModalVisible(false);
   };
 
   renderSimpleForm() {
@@ -298,7 +309,7 @@ class TableList extends PureComponent {
       category: { data },
       loading,
     } = this.props;
-    const { selectedRows, modalVisible } = this.state;
+    const { selectedRows, modalVisible, modeifyRow } = this.state;
 
     const parentMethods = {
       handleAdd: this.handleAdd,
@@ -330,7 +341,7 @@ class TableList extends PureComponent {
             />
           </div>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} />
+        <CreateForm {...parentMethods} modalVisible={modalVisible} record={modeifyRow} />
       </PageHeaderWrapper>
     );
   }

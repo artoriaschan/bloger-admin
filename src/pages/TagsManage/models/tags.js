@@ -1,5 +1,5 @@
 import { queryTags, addTag, updateTag, deleteTag } from '@/services/api';
-import { Notification} from '@/utils/notification'
+import { openNotificationWithIcon } from '@/utils/notification'
 
 export default {
   namespace: 'tags',
@@ -21,13 +21,13 @@ export default {
           });
           break
         case 5:
-          Notification.openNotificationWithIcon('error', "权限错误" , message)
+          openNotificationWithIcon('error', "权限错误" , message)
           break
         case 6:
-          Notification.openNotificationWithIcon('error', "登录失效" , message)
+          openNotificationWithIcon('error', "登录失效" , message)
           break
         default:
-          Notification.openNotificationWithIcon('error', "服务异常" , message)
+          openNotificationWithIcon('error', "服务异常" , message)
           break
       }
     },
@@ -42,13 +42,13 @@ export default {
           });
           break
         case 5:
-          Notification.openNotificationWithIcon('error', "权限错误" , message)
+          openNotificationWithIcon('error', "权限错误" , message)
           break
         case 6:
-          Notification.openNotificationWithIcon('error', "登录失效" , message)
+          openNotificationWithIcon('error', "登录失效" , message)
           break
         default:
-          Notification.openNotificationWithIcon('error', "服务异常" , message)
+          openNotificationWithIcon('error', "服务异常" , message)
           break
       }
       if (callback) callback(response);

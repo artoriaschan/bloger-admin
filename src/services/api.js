@@ -70,23 +70,16 @@ export async function addCates(params) {
 }
 // 更新分类
 export async function updateCates(params) {
-  return request('/api/category', {
+  return request(`${baseURL}/api/cates/update`, {
     method: 'POST',
     body: {
-      params,
-      method: 'update',
+      ...params,
     },
   });
 }
 // 删除分类
 export async function deleteCates(params) {
-  return request('/api/category', {
-    method: 'POST',
-    body: {
-      params,
-      method: 'delete',
-    },
-  });
+  return request(`${baseURL}/api/cate/delete/${params.id}`);
 }
 // 查询标签
 export async function queryTags(params) {

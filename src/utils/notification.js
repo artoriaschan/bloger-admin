@@ -1,6 +1,6 @@
-import {notification} from 'antd'
+import { notification } from 'antd'
 
-const openNotificationWithIcon = (type, title, desc) => {
+function openNotificationWithIcon (type, title, desc) {
     notification[type]({
         message: title,
         description: desc,
