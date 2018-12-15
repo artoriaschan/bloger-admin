@@ -96,27 +96,19 @@ export async function addTag(params) {
 }
 // 更新标签
 export async function updateTag(params) {
-  return request('/api/tags', {
+  return request(`${baseURL}/api/tag/update`, {
     method: 'POST',
     body: {
-      params,
-      method: 'update',
+      ...params,
     },
   });
 }
 // 删除标签
 export async function deleteTag(params) {
-  return request('/api/tags', {
-    method: 'POST',
-    body: {
-      params,
-      method: 'delete',
-    },
-  });
+  return request(`${baseURL}/api/tag/delete/${params.id}`);
 }
 // 登录
 export async function accountLogin(params) {
-  console.log(stringify(params))
   return request(`${baseURL}/api/admin/login`, {
     method: 'POST',
     body: stringify(params),

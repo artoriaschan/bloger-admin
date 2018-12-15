@@ -183,10 +183,10 @@ class CreateArticle extends PureComponent {
       }).then((res) => {
         const { history } = this.props;
         if(res.code === 1) {
-          message.success('发布文章成功,即将跳转文章列表');
-          setTimeout(() => {
-            history.push("/articlemanage/articlelist")
-          }, 2500)
+          // message.success('发布文章成功,即将跳转文章列表');
+          // setTimeout(() => {
+          //   history.push("/articlemanage/articlelist")
+          // }, 2500)
         }
       })
     });
@@ -207,15 +207,6 @@ class CreateArticle extends PureComponent {
                 rules: [{ required: true, message: '请输入文章标题', whitespace: true }],
               })(
                 <Input placeholder="请输入文章标题" />
-              )}
-            </FormItem>
-          </Col>
-          <Col md={24} sm={24}>
-            <FormItem label="作者">
-              {getFieldDecorator('author', {
-                rules: [{ required: true, message: '请输入文章作者', whitespace: true }],
-              })(
-                <Input placeholder="请输入文章作者" />
               )}
             </FormItem>
           </Col>

@@ -36,10 +36,11 @@ const CreateForm = Form.create()(props => {
       handleAdd(fieldsValue, record);
     });
   };
+  const title = record.id ? "修改分类": "创建分类"
   return (
     <Modal
       destroyOnClose
-      title="创建分类"
+      title={title}
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
@@ -115,6 +116,8 @@ class TableList extends PureComponent {
     confirm({
       title,
       content: '删除后无法恢复,确认删除请点击确认',
+      okText: "确认",
+      cancelText: "取消",
       onOk() {
         return ok ? ok() : null
       },

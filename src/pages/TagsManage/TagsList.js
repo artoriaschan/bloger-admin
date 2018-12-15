@@ -54,32 +54,34 @@ class CreateForm extends PureComponent {
   };
 
   render(){
-    const { modalVisible, form, handleAdd, handleModalVisible } = this.props;
+    const { modalVisible, form, handleAdd, handleModalVisible, record  } = this.props;
     const {background, colorPickerVisible} = this.state
     const okHandle = () => {
       form.validateFields((err, fieldsValue) => {
         if (err) return;
         form.resetFields();
-        handleAdd(fieldsValue);
+        handleAdd(fieldsValue, record);
       });
     };
-
+    const title = record.id ? "修改标签": "创建标签"
     return (
       <Modal
         destroyOnClose
-        title="创建标签"
+        title={title}
         visible={modalVisible}
         onOk={okHandle}
-        onCancel={() => handleModalVisible()}
+        onCancel={() => handleModalVisible(false)}
         style={{position: "relaticve"}}
       >
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="标签名称">
           {form.getFieldDecorator('tagname', {
+            initialValue: record ? record.tagname : "",
             rules: [{ required: true, message: '请输入分类名称！'}],
           })(<Input placeholder="请输入分类名称" />)}
         </FormItem>
         <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="标签颜色">
           {form.getFieldDecorator('color', {
+            initialValue: record ? record.color : "",
             rules: [{ required: true, message: '请输入分类名称！'}],
           })(
             <Input placeholder="请选择颜色" disabled />
@@ -134,6 +136,7 @@ class TableList extends PureComponent {
     modalVisible: false,
     selectedRows: [],
     formValues: {},
+    modeifyRow: {},
   };
 
   columns = [
@@ -167,7 +170,7 @@ class TableList extends PureComponent {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <a onClick={this.handleModalVisible}>编辑</a>
+          <a onClick={() => {this.handleModalVisible(true, record)}}>编辑</a>
           <Divider type="vertical" />
           <a onClick={() => this.handleDeleteCate(record)}>删除</a>
         </Fragment>
@@ -186,6 +189,8 @@ class TableList extends PureComponent {
     confirm({
       title,
       content: '删除后无法恢复,确认删除请点击确认',
+      okText: "确认",
+      cancelText: "取消",
       onOk() {
         return ok ? ok() : null
       },
@@ -263,13 +268,12 @@ class TableList extends PureComponent {
 
   handleDeleteCate = (record) => {
     const { dispatch } = this.props
-    const { id, catename} = record
-    console.log(record)
-    this.showConfirm(`确认删除"${catename}"分类?`,
+    const { id, tagname} = record
+    this.showConfirm(`确认删除"${tagname}"分类?`,
       () =>
         new Promise((resolve) => {
           dispatch({
-            type: 'category/remove',
+            type: 'tags/remove',
             payload: {
               id
             },
@@ -314,28 +318,34 @@ class TableList extends PureComponent {
     });
   };
 
-  handleModalVisible = flag => {
+  handleModalVisible = (flag, record) => {
     this.setState({
       modalVisible: !!flag,
+      modeifyRow: record || {}
     });
   };
 
-  handleAdd = fields => {
+  handleAdd = (fields, record) => {
     const { dispatch } = this.props;
-    dispatch({
-      type: 'tags/add',
-      payload: {
-        tagname: fields.tagname,
-        color: fields.color,
-      },
-      callback:(res) => {
-        const { code } = res
-        if (code === 1) {
-          message.success('添加成功');
-        }
-      }
-    });
-    this.handleModalVisible();
+    if ( record.id && record.id !== "" ) {
+      dispatch({
+        type: 'tags/update',
+        payload: {
+          id: record.id,
+          tagname: fields.tagname,
+          color: fields.color,
+        },
+      });
+    }else{
+      dispatch({
+        type: 'tags/add',
+        payload: {
+          tagname: fields.tagname,
+          color: fields.color,
+        },
+      });
+    }
+    this.handleModalVisible(false);
   };
 
   renderSimpleForm() {
@@ -377,7 +387,7 @@ class TableList extends PureComponent {
       tags: { data },
       loading,
     } = this.props;
-    const { selectedRows, modalVisible } = this.state;
+    const { selectedRows, modalVisible, modeifyRow } = this.state;
 
     const parentMethods = {
       handleAdd: this.handleAdd,
@@ -409,7 +419,7 @@ class TableList extends PureComponent {
             />
           </div>
         </Card>
-        <CreateForm {...parentMethods} modalVisible={modalVisible} />
+        <CreateForm {...parentMethods} modalVisible={modalVisible} record={modeifyRow} />
       </PageHeaderWrapper>
     );
   }
